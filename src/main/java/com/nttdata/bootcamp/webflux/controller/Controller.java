@@ -17,4 +17,15 @@ public class Controller {
 		
 		return messageSender;
 	}
+	
+	@GetMapping(path="/numbeers-with-subscribers", produces="text/event-stream")
+	public Flux<Integer> numbersWithSubscribers(){
+		
+		Flux<Integer> messageSender = Flux.range(1, 30).delayElements(Duration.ofSeconds(1));
+		
+		messageSender.subscribe(n -> Subscriber.print(n));
+		messageSender.subscribe(n -> System.out.println("Subscriptor 2: "+ n));
+		
+		return messageSender;
+	}
 }
